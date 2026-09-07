@@ -11,7 +11,7 @@ def extract(url):
 
     soup = BeautifulSoup(page, 'html.parser')
     product_page_url_to_transform = str(url)
-    tds=soup.findAll('td')
+    tds = soup.find_all('td')
         
     universal_product_code_to_transform = tds[0].string
     number_available_to_transform = tds[5].string
@@ -55,8 +55,8 @@ def transform(data_to_transform):
         'universal_product_code': data_to_transform['universal_product_code_to_transform'],
         'number_available': int(re.search(r'\d+', data_to_transform['number_available_to_transform']).group()),
         'title': data_to_transform['title_to_transform'],
-        'price_including_tax': data_to_transform['price_including_tax_to_transform'][1:] + 'euros',
-        'price_excluding_tax': data_to_transform['price_excluding_tax_to_transform'][1:] + 'euros',
+        'price_including_tax': float(data_to_transform['price_including_tax_to_transform'][1:]),
+        'price_excluding_tax': float(data_to_transform['price_excluding_tax_to_transform'][1:]),
         'product_description': data_to_transform['product_description_to_transform'].strip(),
         'category': data_to_transform['category_to_transform'],
         'review_rating': rating_mapping.get(data_to_transform['review_rating_to_transform'],None),
@@ -65,6 +65,7 @@ def transform(data_to_transform):
     return data_to_load
     
 def load(data_to_load, filename="output.csv"):
+    
     with open(filename, mode="w") as file:
         fieldnames = data_to_load.keys()
         writer = csv.DictWriter(file, fieldnames=fieldnames)
