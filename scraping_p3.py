@@ -3,6 +3,7 @@
 def extract_and_load_images_category():
     pass
 
+
 def load_all_category(all_category_books):
     pass
 
