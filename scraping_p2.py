@@ -2,7 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 from scraping_p1 import extract
 from scraping_p1 import transform
-
+import csv
+import argparse
 
 def extract_and_transform_category(url):
     list_data_category = []
@@ -35,11 +36,22 @@ def extract_and_transform_category(url):
 
 
 def load_category(list_data_category):
-    pass
+    #create a csv file with alle the books properties ans value of a category
+    with open('category_books_data.csv', 'w') as csvfile:
+        fieldnames = list_data_category[0].keys()
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for book_data in list_data_category:
+            writer.writerow(book_data)
 
 def main():
 
-    url = "http://books.toscrape.com/catalogue/category/books/mystery_3/index.html"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("url")
+    args = parser.parse_args()
+    
+    url = args.url
+
     list_data_category = extract_and_transform_category(url) 
     load_category(list_data_category)
 
