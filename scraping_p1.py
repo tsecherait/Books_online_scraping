@@ -2,7 +2,7 @@ import requests
 import csv
 from bs4 import BeautifulSoup
 import re
-
+import argparse
 
 
 def extract(url):
@@ -82,7 +82,12 @@ def load(data_to_load, filename="output.csv"):
 
 def main():
        
-    url = "http://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("url")
+    args = parser.parse_args()
+
+    url = args.url
+
     data_to_transform = extract(url)
     data_to_load = transform(data_to_transform)
     load(data_to_load, "output.csv")
