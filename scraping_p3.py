@@ -4,9 +4,21 @@ from bs4 import BeautifulSoup
 import os
 import csv
 
+folder = "folder"
 
 def extract_and_load_images_category(all_category_books):
-    pass
+    for category_name in all_category_books.keys():
+        image_folder = os.path.join(folder, "images", category_name)
+        if not os.path.exists(image_folder):
+            os.makedirs(image_folder)
+        for book_data in all_category_books[category_name]:
+            image_url = book_data["image_url"]
+            image_name = book_data["universal_product_code"] + ".jpg"  # Nommez l'image en utilisant le code produit universel
+            image_path = os.path.join(image_folder, image_name)
+            response = requests.get(image_url)
+            with open(image_path, 'wb') as image_file:
+                image_file.write(response.content)
+    
 
 def load_all_category(all_category_books):
     file_folder = os.path.join(folder, "file")
