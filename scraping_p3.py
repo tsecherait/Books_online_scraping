@@ -1,14 +1,25 @@
 from scraping_p2 import extract_and_transform_category
 import requests
 from bs4 import BeautifulSoup
-
+import os
+import csv
 
 
 def extract_and_load_images_category(all_category_books):
     pass
 
 def load_all_category(all_category_books):
-    pass
+    file_folder = os.path.join(folder, "file")
+    if not os.path.exists(file_folder):              
+        os.makedirs(file_folder)
+    for category_name in all_category_books.keys():
+        csv_filename = os.path.join(file_folder, f"{category_name}_books_data.csv")
+        with open(csv_filename, 'w', newline='', encoding='utf-8') as csvfile:
+            fieldnames = all_category_books[category_name][0].keys()
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames, quoting=csv.QUOTE_ALL)
+            writer.writeheader()
+            for book_data in all_category_books[category_name]:
+                writer.writerow(book_data)
 
 
 def extract_all_category(url):
