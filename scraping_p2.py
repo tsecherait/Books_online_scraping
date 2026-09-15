@@ -12,14 +12,14 @@ def extract_and_transform_category(url):
     while condition:
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
-    
+        #loop on all the books of a page of a catégory
         books = soup.find_all('h3')
         for book in books:
             book_link = book.find('a')['href']
                 
             data_book_category = transform(extract(url.rsplit('/', 4)[0] +'/'+ book_link.split('/', 3)[3]))
             list_data_category.append(data_book_category)
-    
+        #change the page of the category to continue to loop on this new page
         next_page = soup.find('li', class_='next')
         condition = next_page
         if next_page:

@@ -71,7 +71,7 @@ def transform(data_to_transform):
     
 def load(data_to_load, filename="output.csv"):
 
-    #Write the properties ans their value in csv file
+    #Write the properties and their value in csv file
     with open(filename, mode="w") as file:
         fieldnames = data_to_load.keys()
         writer = csv.DictWriter(file, fieldnames=fieldnames)
