@@ -50,7 +50,7 @@ def extract_all_category(url):
     all_category_books = {}
     
     soup = BeautifulSoup(response.content, 'html.parser')   
-    category_links = soup.find('ul', class_='nav').findAll('a')
+    category_links = soup.find('ul', class_='nav').find_all('a')
         
     for category_link in category_links:
         category_url = url +'/'+ category_link['href']   

@@ -65,7 +65,7 @@ def transform(data_to_transform):
         'product_description': data_to_transform['product_description_to_transform'].strip(),
         'category': data_to_transform['category_to_transform'],
         'review_rating': rating_mapping.get(data_to_transform['review_rating_to_transform'],None),
-        'image_url': 'product_page_url_to_transform'.rsplit('/', 2)[0] + '/' + data_to_transform['image_url_to_transform'],
+        'image_url': data_to_transform['product_page_url_to_transform'].rsplit('/', 2)[0] + '/' + data_to_transform['image_url_to_transform'],
     }
     return data_to_load
     

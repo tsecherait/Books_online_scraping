@@ -21,15 +21,14 @@ def extract_and_transform_category(url):
             list_data_category.append(data_book_category)
     
         next_page = soup.find('li', class_='next')
+        condition = next_page
         if next_page:
             next_page_link = next_page.find('a')['href']
     
                 
             next_page_url = url.rsplit('/',2)[0]+'/'+next_page_link
             url = next_page_url
-            condition = url
-        else:
-            condition = next_page
+        
             
     
     return list_data_category
