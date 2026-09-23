@@ -23,29 +23,12 @@ def extract_and_load_images_category(all_category_books):
             response = requests.get(image_url)
             with open(image_path, 'wb') as image_file:
                 image_file.write(response.content)
+        print(f"Le programme a téléchargé toutes les images des livres de la catégorie {category_name}")
                 
 
 
  
 
-
-
-
-def load_all_category(all_category_books):
-    #create folder/file folder
-    file_folder = os.path.join(folder, "file")
-    if not os.path.exists(file_folder):              
-        os.makedirs(file_folder)
-    for category_name in all_category_books.keys():
-        #load files called category_name_books_data.csv in the folder called folder/file
-        csv_filename = os.path.join(file_folder, f"{category_name}_books_data.csv")
-        with open(csv_filename, 'w', newline='', encoding='utf-8') as csvfile:
-            fieldnames = all_category_books[category_name][0].keys()
-            #create a writer csv object
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writeheader()
-            for book_data in all_category_books[category_name]:
-                writer.writerow(book_data)
         
 
 def extract_all_category(url):
@@ -56,7 +39,11 @@ def extract_all_category(url):
     
     soup = BeautifulSoup(response.content, 'html.parser')   
     category_links = soup.find('ul', class_='nav').find_all('a')
-       
+    #create folder to put the files of data
+    file_folder = os.path.join(folder, "file")
+    if not os.path.exists(file_folder):              
+        os.makedirs(file_folder)
+    
     for category_link in category_links:
         #generate the url of each category which will be the argument of an extract function
         category_url = url +'/'+ category_link['href']   
@@ -66,15 +53,24 @@ def extract_all_category(url):
             category_books_data = extract_and_transform_category(category_url)
             #put all categories books in a dictionnary where keys are the name of the category
             all_category_books.update({category_name: category_books_data})
+            csv_filename = os.path.join(file_folder, f"{category_name}_books_data.csv")
+            with open(csv_filename, 'w', newline='', encoding='utf-8') as csvfile:
+                fieldnames = category_books_data[0].keys()
+                #create a writer csv object
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                writer.writeheader()
+                print(f"Le programme a écrit les en-têtes de la catégorie {category_name}")
+                for book_data in category_books_data:
+                    writer.writerow(book_data)
     return all_category_books
 
 def main():
 
     url = "http://books.toscrape.com/"
     download_image = input("écrivez oui si vous voulez télécharger les images:")
-    
+    #extract all books categories and load books in files
     all_category_books = extract_all_category(url)
-    load_all_category(all_category_books)
+    
     #ask if you want to download the images. Answer must be oui
     if download_image == "oui":
         extract_and_load_images_category(all_category_books)
