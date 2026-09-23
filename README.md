@@ -87,6 +87,6 @@ Vous pouvez ouvrir tous les fichiers CSV avec la commande open sous Mac :
 
 **Exemple:**
 
-````
+```
 open output.csv
 ```
