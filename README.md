@@ -22,8 +22,16 @@ Le fichier `requirements.txt` contient toutes les dépendances nécessaires à l
 
 ```code
 pip3 install -r requirements.txt
-```
 
+
+```
+## Lancer main.py pour utiliser les différents scripts comme modules
+
+Lancer main.py et vous pouvez rentrer n'importe quelle adresse de page produit, de page catégorie ou d'adresse principale du site web. Répondez simplement à la question posée sur l'adresse voulue juste après le lancement du script main.py
+
+```code
+python main.py
+```
 ## Extraire les informations d'une page d'un bouquin
 
 Le script `scraping_p1.py` permet de visiter une page d'un bouquin spécifiée sur le site [Books Online](http://books.toscrape.com/), d'extraire les informations essentielles ci-dessous, puis de les écrire dans un fichier CSV avec des en-têtes de colonnes appropriées.
