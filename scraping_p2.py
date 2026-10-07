@@ -26,7 +26,8 @@ def extract_and_transform_category(url):
             next_page_link = next_page.find('a')['href']
     
                 
-            next_page_url = url.rsplit('/',2)[0]+'/'+next_page_link
+            next_page_url = url.rsplit('/',1)[0]+'/'+next_page_link
+            print(next_page_url)
             url = next_page_url
         
             
